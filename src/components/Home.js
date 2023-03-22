@@ -37,60 +37,71 @@ class App extends Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
+    console.log("Account[0]", accounts[0])
     // Ganache -> 5777, Rinkeby -> 4, BSC -> 97
     const networkId = await web3.eth.net.getId()
     console.log('networkid:', networkId)
 
-    // Carga del JamToken
+
+// carga del jamToken
     const jamTokenData = JamToken.networks[networkId]
+
     if (jamTokenData) {
       const jamToken = new web3.eth.Contract(JamToken.abi, jamTokenData.address)
       this.setState({ jamToken: jamToken })
       let jamTokenBalance = await jamToken.methods.balanceOf(this.state.account).call()
-      this.setState({ jamTokenBalance: jamTokenBalance.toString() })
+          this.setState({ jamToken: jamTokenBalance.toString() })
     } else {
-      window.alert('El JamToken no se ha desplegado en la red')
+      window.alert("El JamToken no ah sido desplegado xD")
+
     }
 
-    // Carga de StellartToken
+// carga del stellar token
     const stellartTokenData = StellartToken.networks[networkId]
+
     if (stellartTokenData) {
       const stellartToken = new web3.eth.Contract(StellartToken.abi, stellartTokenData.address)
       this.setState({ stellartToken: stellartToken })
       let stellartTokenBalance = await stellartToken.methods.balanceOf(this.state.account).call()
       this.setState({ stellartTokenBalance: stellartTokenBalance.toString() })
-    } else {
-      window.alert('El StellartToken no se ha desplegado en la red')
+ 
+    }
+    else {
+      window.alert("el stellarToken no ah sido desplegado xD")
     }
 
-    // Carga de TokenFarm
+// carga del TokenFarm
     const tokenFarmData = TokenFarm.networks[networkId]
+
     if (tokenFarmData) {
       const tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
       this.setState({ tokenFarm: tokenFarm })
       let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call()
       this.setState({ stakingBalance: stakingBalance.toString() })
-    } else {
-      window.alert('El TokenFarm no se ha desplegado en la red')
+
     }
-    this.setState({ loading: false })
+    else {
+      window.alert("el tokenFarm no ah sido desplegado en la red xD")
+    } 
+    this.setState({ loading: false })  
   }
 
-  stakeTokens = (amount) => {
+
+  stakeTokens = (amount)=> {
     this.setState({ loading: true })
-    this.state.jamToken.methods.approve(this.state.tokenFarm._address, amount)
-      .send({ from: this.state.account })
+    this.state.jamToken.methods.approve(this.state.tokenFarm._address, amount).send({ from: this.state.account })
       .on('transactionHash', (hash) => {
         this.state.tokenFarm.methods.stakeTokens(amount).send({ from: this.state.account })
           .on('transactionHash', (hash) => {
-            this.setState({ loading: false })
-          })
+            this.setState({loading: false})
+        })
       })
+  
   }
 
   unstakeTokens = (amount) => {
     this.setState({ loading: true })
-    this.state.tokenFarm.methods.unstakeTokens().send({ from: this.state.account })
+    this.setState.TokenFarm.methods.unstakeTokens().sender({ from: this.state.account })
       .on('transactionHash', (hash) => {
         this.setState({ loading: false })
       })

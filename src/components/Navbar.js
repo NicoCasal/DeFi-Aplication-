@@ -6,7 +6,7 @@ const Navigation = ({ account }) => {
     return (
         <Navbar expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="https://blockstellart.com">
+                <Navbar.Brand href="https://www.youtube.com/watch?v=1gUCu2e_JiM">
                     &nbsp; DApp
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar navbar-dark bg-primary" />

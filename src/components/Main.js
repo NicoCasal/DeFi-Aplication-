@@ -9,8 +9,8 @@ class Main extends Component {
                 <table className="table table-borderless text-muted text-center">
                     <thead>
                         <tr>
-                            <th scope="col">Balance de Staking</th>
-                            <th scope="col">Balance de recompensas</th>
+                            <th scope="col">Staking Balance</th>
+                            <th scope="col">Staking Proofs</th>
                         </tr>
                     </thead>
                     <tbody>
